@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     sh "npm install"
-                    sh "nohup npm run build"
+                    sh "npm run build &"
                     sh "npm run cypress"
                 }
             }
