@@ -35,7 +35,7 @@ pipeline {
                     sh "npm install"
                     sh "npm run build"
                     sh "npm run start &"
-                    sh "npm run cypress --env host=localhost, port=3000"
+                    sh "npm run cypress"
                 }
             }
             post {
