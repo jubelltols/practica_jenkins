@@ -88,11 +88,18 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         stage('deploy_to_Vercel') {
             steps {
                 script {
-                    sh ""
+                    withCredentials([
+                        string(credentialsId: 'vercel-org-id', variable: 'VERCELORGID')
+                        string(credentialsId: 'vercel-project-id', variable: 'VERCELPROJECTID')
+                        string(credentialsId: 'vercel-token', variable: 'VERCELTOKEN')
+                    ]){
+                        sh "VERCEL_ORG_ID=$VERCELORGID VERCEL_PROJECT_ID=$VERCELPROJECTID vercel --prod --scope jubelltols --token=$VERCELTOKEN"
+                    }
+                    
                 }
             }
             post {
@@ -107,7 +114,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
         stage('notificacion') {
             steps {
                 script {
