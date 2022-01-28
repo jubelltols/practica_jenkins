@@ -19,6 +19,18 @@ pipeline {
                     sh "npm run lint"
                 }
             }
+            post {
+                success {
+                    script {
+                        env.CORREO = "SUCCESS"
+                    }
+                }
+                failure {
+                    script {
+                        env.CORREO = "FAILURE"
+                    }
+                }
+            }
         }
         stage('test') {
             steps {
@@ -52,9 +64,6 @@ pipeline {
             }
         }*/
         stage('notificacion') {
-            environment {
-                CORREO = currentBuild.result
-            }
             steps {
                 script {
                     sh "node jenkinsScripts/notificacion.js"
