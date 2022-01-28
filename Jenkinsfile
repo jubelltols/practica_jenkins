@@ -27,7 +27,7 @@ pipeline {
                 }
             }
         }
-        stage('update_readme') {
+       /*  stage('update_readme') {
             steps {
                 script {
                     sh "node jenkinsScripts/update_readme.js"
@@ -54,6 +54,6 @@ pipeline {
                     sh "node jenkinsScripts/notificacion.js"
                 }
             }
-        }
+        } */
     }
 }
