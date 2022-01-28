@@ -54,6 +54,9 @@ pipeline {
         stage('notificacion') {
             steps {
                 script {
+                    environment {
+                        CORREO = currentBuild.result
+                    }
                     sh "node jenkinsScripts/notificacion.js"
                 }
             }
