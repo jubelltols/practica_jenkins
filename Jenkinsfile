@@ -97,12 +97,12 @@ pipeline {
                         string(credentialsId: 'vercel-project-id', variable: 'VERCELPROJECTID'),
                         string(credentialsId: 'vercel-token', variable: 'VERCELTOKEN')
                     ]){
-                        sh "VERCEL_ORG_ID=$VERCELORGID VERCEL_PROJECT_ID=$VERCELPROJECTID vercel --prod --scope jubelltols --token=$VERCELTOKEN"
+                        sh "env VERCEL_ORG_ID=$VERCELORGID VERCEL_PROJECT_ID=$VERCELPROJECTID vercel --prod --scope jubelltols --token=$VERCELTOKEN"
                     }
                     
                 }
             }
-            post {
+            /* post {
                 success {
                     script {
                         env.DEPLOY = "SUCCESS"
@@ -113,14 +113,14 @@ pipeline {
                         env.DEPLOY = "FAILURE"
                     }
                 }
-            }
+            } */
         }
-        stage('notificacion') {
+        /* stage('notificacion') {
             steps {
                 script {
                     sh "node jenkinsScripts/notificacion.js"
                 }
             }
-        } 
+        }  */
     }
 }
