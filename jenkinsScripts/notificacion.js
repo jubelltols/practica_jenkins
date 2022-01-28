@@ -14606,7 +14606,8 @@
     var __webpack_exports__ = {};
     // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
     (() => {
-    const core = __nccwpck_require__(3453);
+
+   /*  const core = __nccwpck_require__(3453);
     const nodemailer = __nccwpck_require__(832);
     
     var transporter = nodemailer.createTransport({
@@ -14640,7 +14641,11 @@
         } else {
             console.log('Email sent: ' + info.response);
         }
-    });
+    }); */
+
+    const correo_notificación = process.env.correo_notificación;
+
+    console.log("correo: " + correo_notificación);
     
     })();
     
