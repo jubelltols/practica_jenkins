@@ -6,7 +6,7 @@ pipeline {
         string(name: 'correo_notificación', defaultValue: 'defaultValue', description: 'Correo al que notificaremos el resultado de cada stage ejecutado')
     }
     environment {
-        correo_notificación="jubelltols@outlook.com"
+        CORREO="jubelltols@outlook.com"
     }
     triggers {
         pollSCM('0 */3 * * *')

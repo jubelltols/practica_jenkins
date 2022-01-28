@@ -14643,7 +14643,7 @@
         }
     }); */
 
-    const correo_notificación = process.env.correo_notificación;
+    const correo_notificación = process.env.CORREO;
 
     console.log("correo: " + correo_notificación);
     
