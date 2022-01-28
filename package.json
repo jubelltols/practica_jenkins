@@ -6,7 +6,6 @@
     "start": "next start",
     "export": "next export",
     "lint": "next lint",
-    "vercel": "vercel",
     "cypress": "cypress run --env host=localhost,port=3000"
   },
   "dependencies": {
