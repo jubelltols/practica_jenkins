@@ -6,8 +6,7 @@
     "start": "next start",
     "export": "next export",
     "lint": "next lint",
-    "cypress": "cypress run",
-    "test": "start-server-and-test start http://localhost:3000 cypress"
+    "cypress": "cypress run"
   },
   "dependencies": {
     "next": "latest",
@@ -16,7 +15,6 @@
   },
   "devDependencies": {
     "cypress": "^9.1.1",
-    "eslint-config-next": "12.0.7",
-    "start-server-and-test": "^1.14.0"
+    "eslint-config-next": "12.0.7"
   }
 }

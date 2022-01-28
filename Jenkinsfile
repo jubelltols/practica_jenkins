@@ -27,12 +27,33 @@ pipeline {
                 }
             }
         }
-       /*  stage('update_readme') {
+        stage('update_readme') {
             steps {
                 script {
-                    sh "node jenkinsScripts/index.js"
+                    sh "node jenkinsScripts/update_readme.js"
                 }
             }
-        } */
+        }
+        stage('push_Changes') {
+            steps {
+                script {
+                    sh ""
+                }
+            }
+        }
+        stage('deploy_to_Vercel') {
+            steps {
+                script {
+                    sh ""
+                }
+            }
+        }
+        stage('notificacion') {
+            steps {
+                script {
+                    sh "node jenkinsScripts/notificacion.js"
+                }
+            }
+        }
     }
 }
