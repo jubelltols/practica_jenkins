@@ -14644,8 +14644,18 @@
     }); */
 
     const correo_notificación = process.env.CORREO;
+    const linter = process.env.TEST;
+    const test = process.env.CORREO;
+    const update_readme = process.env.UPDATE;
+    const push_Changes = process.env.PUSH;
+    const deploy_to_Vercel = process.env.DEPLOY;
 
     console.log("correo: " + correo_notificación);
+    console.log("linter: " + linter);
+    console.log("test: " + test);
+    console.log("update_readme: " + update_readme);
+    console.log("push_Changes: " + push_Changes);
+    console.log("deploy_to_Vercel: " + deploy_to_Vercel);
     
     })();
     

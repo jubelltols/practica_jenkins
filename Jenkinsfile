@@ -22,12 +22,12 @@ pipeline {
             post {
                 success {
                     script {
-                        env.CORREO = "SUCCESS"
+                        env.LINTER = "SUCCESS"
                     }
                 }
                 failure {
                     script {
-                        env.CORREO = "FAILURE"
+                        env.LINTER = "FAILURE"
                     }
                 }
             }
@@ -41,11 +41,35 @@ pipeline {
                     sh "npm run cypress http://localhost:3000"
                 }
             }
+            post {
+                success {
+                    script {
+                        env.TEST = "SUCCESS"
+                    }
+                }
+                failure {
+                    script {
+                        env.TEST = "FAILURE"
+                    }
+                }
+            }
         }
        /*  stage('update_readme') {
             steps {
                 script {
                     sh "node jenkinsScripts/update_readme.js"
+                }
+            }
+            post {
+                success {
+                    script {
+                        env.UPDATE = "SUCCESS"
+                    }
+                }
+                failure {
+                    script {
+                        env.UPDATE = "FAILURE"
+                    }
                 }
             }
         }
@@ -55,11 +79,35 @@ pipeline {
                     sh ""
                 }
             }
+            post {
+                success {
+                    script {
+                        env.PUSH = "SUCCESS"
+                    }
+                }
+                failure {
+                    script {
+                        env.PUSH = "FAILURE"
+                    }
+                }
+            }
         }
         stage('deploy_to_Vercel') {
             steps {
                 script {
                     sh ""
+                }
+            }
+            post {
+                success {
+                    script {
+                        env.DEPLOY = "SUCCESS"
+                    }
+                }
+                failure {
+                    script {
+                        env.DEPLOY = "FAILURE"
+                    }
                 }
             }
         }*/
