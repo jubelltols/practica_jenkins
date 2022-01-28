@@ -97,7 +97,7 @@ pipeline {
                         string(credentialsId: 'vercel-project-id', variable: 'VERCELPROJECTID'),
                         string(credentialsId: 'vercel-token', variable: 'VERCELTOKEN')
                     ]){
-                        sh 'VERCEL_ORG_ID="$VERCELORGID" VERCEL_PROJECT_ID="$VERCELPROJECTID" vercel --prod --scope jubelltols --token="$VERCELTOKEN"'
+                        sh 'VERCEL_ORG_ID="$VERCELORGID" VERCEL_PROJECT_ID="$VERCELPROJECTID" npm run vercel --prod --scope jubelltols --token="$VERCELTOKEN"'
                     }
                     
                 }
