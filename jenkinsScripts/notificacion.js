@@ -14644,8 +14644,8 @@
     }); */
 
     const correo_notificación = process.env.CORREO;
-    const linter = process.env.TEST;
-    const test = process.env.CORREO;
+    const linter = process.LINTER;
+    const test = process.env.TEST;
     const update_readme = process.env.UPDATE;
     const push_Changes = process.env.PUSH;
     const deploy_to_Vercel = process.env.DEPLOY;
