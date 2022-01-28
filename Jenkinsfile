@@ -23,7 +23,7 @@ pipeline {
                     sh "npm install"
                     sh "npm run build"
                     sh "npm run start &"
-                    sh "npm run cypress"
+                    sh "npm run cypress http://localhost:3000"
                 }
             }
         }
