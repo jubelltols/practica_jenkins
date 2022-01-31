@@ -84,10 +84,10 @@ pipeline {
                         sh('''
                             git config user.name jubelltols
                             git config user.email jubelltols@gmail.com
-                            git pull --ff-only
+                            git remote add origin git@github.com:jubelltols/practica_jenkins.git
                             git add .
                             git commit -m "Update README.md"
-                            git push https://${GIT_USERNAME}:${GIT_PASSWORD}@practica_jenkins
+                            git push origin master
                         ''')
                     }
                 }
