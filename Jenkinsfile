@@ -36,6 +36,7 @@ pipeline {
                     sh "npm run build"
                     sh "npm run start &"
                     sh "npm run cypress"
+                    echo $?
                 }
             }
             post {
