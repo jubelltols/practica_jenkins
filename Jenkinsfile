@@ -74,12 +74,23 @@ pipeline {
         stage('push_Changes') {
             steps {
                 script {
-                    sh '''git config user.name jubelltols
+                    /* sh '''git config user.name jubelltols
                         git config user.email jubelltols@gmail.com
                         git pull --ff-only
                         git add .
                         git commit -m "Update README.md"
-                        git push '''
+                        git push ''' */
+                        withCredentials([usernamePassword(credentialsId: 'jubelltols/******', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                        git 'https://github.com/jubelltols/practica_jenkins.git'
+                        sh('''
+                            git config user.name jubelltols
+                            git config user.email jubelltols@gmail.com
+                            git pull
+                            git add .
+                            git commit -m "Update README.md"
+                            git push https://${GIT_USERNAME}:${GIT_PASSWORD}@practica_jenkins
+                        ''')
+                    }
                 }
             }
             post {
