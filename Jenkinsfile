@@ -102,7 +102,7 @@ pipeline {
                     
                 }
             }
-            /* post {
+            post {
                 success {
                     script {
                         env.DEPLOY = "SUCCESS"
@@ -113,14 +113,17 @@ pipeline {
                         env.DEPLOY = "FAILURE"
                     }
                 }
-            } */
+            }
         }
-        /* stage('notificacion') {
+        stage('notificacion') {
             steps {
                 script {
-                    sh "node jenkinsScripts/notificacion.js"
+                    echo "${env.LINTER}"
+                    echo "${env.TEST}"
+                    echo "${env.DEPLOY}"
+                    /* sh "node jenkinsScripts/notificacion.js" */
                 }
             }
-        }  */
+        } 
     }
 }
