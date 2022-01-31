@@ -32,9 +32,9 @@ pipeline {
         stage('test') {
             steps {
                 script {
-                    env.TEST = sh {npm run build
+                    env.TEST = sh {'''npm run build
                         npm run start &
-                        npm run cypress}
+                        npm run cypress'''}
                 }
             }
             /* post {
