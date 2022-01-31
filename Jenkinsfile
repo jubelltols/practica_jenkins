@@ -32,10 +32,10 @@ pipeline {
         stage('test') {
             steps {
                 script {
-                    sh "npm install
-                        npm run build
-                        npm run start &
-                        npm run cypress"
+                    sh "npm install"
+                    sh "npm run build"
+                    sh "npm run start &"
+                    sh "npm run cypress --headed"
                 }
             }
             post {
