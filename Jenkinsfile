@@ -32,12 +32,12 @@ pipeline {
         stage('test') {
             steps {
                 script {
-                    sh '''npm run build
-                        
+                    env.TEST = sh '''npm run build
+                        npm run start &
                         npm run cypress'''
                 }
             }
-            post {
+            /* post {
                 success {
                     script {
                         env.TEST = "SUCCESS"
@@ -48,7 +48,7 @@ pipeline {
                         env.TEST = "FAILURE"
                     }
                 }
-            }
+            } */
         }
        /*  stage('update_readme') {
             steps {
