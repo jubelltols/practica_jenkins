@@ -84,7 +84,7 @@ pipeline {
                         /* withCredentials([usernameColonPassword(credentialsId: 'github-token', variable: 'USERPASS')]) {      */
                             sh 'git remote set-url origin https://"$PASSWORD":"$USER"@github.com/jubelltols/practica_jenkins'
                         }
-                        sh "git push"
+                        sh "git push origin HEAD:master"
                     }
                 }
             post {
