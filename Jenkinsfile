@@ -38,7 +38,6 @@ pipeline {
                     sh "npm run cypress"
                     sh "echo \$?"
                 }
-             
             }
             post {
                 success {
@@ -71,11 +70,16 @@ pipeline {
                     }
                 }
             }
-        }
+        } */
         stage('push_Changes') {
             steps {
                 script {
-                    sh ""
+                    sh '''git config user.name jubelltols
+                        git config user.email jubelltols@gmail.com
+                        git pull
+                        git add .
+                        git commit -m "Update README.md"
+                        git push '''
                 }
             }
             post {
@@ -90,7 +94,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
         stage('deploy_to_Vercel') {
             steps {
                 script {
