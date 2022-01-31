@@ -73,22 +73,16 @@ pipeline {
         } */
         stage('push_Changes') {
             steps {
-                script {
-                    /* sh '''git config user.name jubelltols
-                        git config user.email jubelltols@gmail.com
-                        git pull --ff-only
-                        git add .
-                        git commit -m "Update README.md"
-                        git push ''' */
-                    withCredentials([usernamePassword(credentialsId: 'github-token', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh('''
-                            git config user.name jubelltols
-                            git config user.email jubelltols@gmail.com
-                            git pull --ff-only
-                            git add .
-                            git commit -m "Update README.md"
-                            git push https://${GIT_USERNAME}:${GIT_PASSWORD}@practica_jenkins
-                        ''')
+                script {                    
+                            sh "git config user.name jubelltols"
+                            sh "git config user.email jubelltols@gmail.com"
+                            sh "git pull --ff-only"
+                            sh "git add ."
+                            sh "git commit -m 'Update README.md'"
+                            withCredentials([usernameColonPassword(credentialsId: 'github-token', variable: 'USERPASS')]) {     
+                                sh "git remote set-url origin https://$USERPASS@github.com/jubelltols/practica_jenkins"
+                            }
+                            sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@practica_jenkins"
                     }
                 }
             }
