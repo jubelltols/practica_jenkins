@@ -78,7 +78,7 @@ pipeline {
                         sh "git config user.email jubelltols@gmail.com"
                         sh "git add ."
                         sh "git commit -m 'Update README.md'"
-                        withCredentials([script.usernamePassword(credentialsId: 'github-token', 
+                        withCredentials([usernamePassword(credentialsId: 'github-token', 
                                                 usernameVariable: 'USER', 
                                                 passwordVariable: 'PASSWORD')]) {
                         /* withCredentials([usernameColonPassword(credentialsId: 'github-token', variable: 'USERPASS')]) {      */
