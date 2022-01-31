@@ -84,7 +84,7 @@ pipeline {
                         sh('''
                             git config user.name jubelltols
                             git config user.email jubelltols@gmail.com
-                            git pull
+                            git pull --ff-only
                             git add .
                             git commit -m "Update README.md"
                             git push https://${GIT_USERNAME}:${GIT_PASSWORD}@practica_jenkins
