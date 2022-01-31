@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     sh '''npm run build
-                        npm run start &
+                        
                         npm run cypress'''
                 }
             }
