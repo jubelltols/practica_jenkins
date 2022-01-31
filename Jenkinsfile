@@ -78,10 +78,10 @@ pipeline {
                         sh "git config user.email jubelltols@gmail.com"
                         sh "git add ."
                         sh "git commit -m 'Update README.md'"
-                        script.withCredentials([script.usernamePassword(credentialsId: 'github-token', 
+                        withCredentials([script.usernamePassword(credentialsId: 'github-token', 
                                                 usernameVariable: 'USER', 
                                                 passwordVariable: 'PASSWORD')]) {
-                        withCredentials([usernameColonPassword(credentialsId: 'github-token', variable: 'USERPASS')]) {     
+                        /* withCredentials([usernameColonPassword(credentialsId: 'github-token', variable: 'USERPASS')]) {      */
                             sh "git remote set-url origin https://$PASSWORD:$USER@github.com/jubelltols/practica_jenkins"
                         }
                         sh "git push"
