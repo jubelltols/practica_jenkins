@@ -85,7 +85,6 @@ pipeline {
                         sh "git push"
                     }
                 }
-            }
             post {
                 success {
                     script {
