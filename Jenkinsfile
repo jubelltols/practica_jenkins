@@ -80,7 +80,7 @@ pipeline {
                         git add .
                         git commit -m "Update README.md"
                         git push ''' */
-                        withCredentials([usernamePassword(credentialsId: 'jubelltols/******', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                        withCredentials([usernamePassword(credentialsId: 'github-token', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         git 'https://github.com/jubelltols/practica_jenkins.git'
                         sh('''
                             git config user.name jubelltols
