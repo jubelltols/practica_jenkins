@@ -38,7 +38,7 @@ pipeline {
                     sh "npm run cypress"
                   
                 }
-                  echo $?
+                  echo "$?"
             }
             post {
                 success {
