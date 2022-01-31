@@ -32,7 +32,7 @@ pipeline {
         stage('test') {
             steps {
                 script {
-                    env.TEST = jenkinsScripts/cypress_run.sh
+                    env.TEST = sh {jenkinsScripts/cypress_run.sh}
                 }
             }
             /* post {
