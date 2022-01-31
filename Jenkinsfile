@@ -76,7 +76,7 @@ pipeline {
                 script {                    
                         sh "git config user.name jubelltols"
                         sh "git config user.email jubelltols@gmail.com"
-                        sh "git pull --ff-only"
+                        sh "git pull"
                         sh "git add ."
                         sh "git commit -m 'Update README.md'"
                         withCredentials([usernameColonPassword(credentialsId: 'github-token', variable: 'USERPASS')]) {     
