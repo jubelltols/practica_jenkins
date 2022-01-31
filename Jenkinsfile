@@ -79,7 +79,7 @@ pipeline {
                         sh "git add ."
                         sh "git commit -m 'Update README.md'"
                         withCredentials([usernameColonPassword(credentialsId: 'github-token', variable: 'USERPASS')]) {     
-                            sh 'git remote set-url origin https://$USERPASS@github.com/jubelltols/practica_jenkins'
+                            sh "git remote set-url origin https://$USERPASS@github.com/jubelltols/practica_jenkins"
                         }
                         sh "git push"
                     }
