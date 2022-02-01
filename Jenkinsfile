@@ -118,7 +118,7 @@ pipeline {
                     echo "${env.TEST}"
                     echo "${env.UPDATE}"
                     echo "${env.DEPLOY}"
-                    env.CORREO = ${params.correo_notificación}
+                    env.CORREO = "${params.correo_notificación}"
                     sh "node jenkinsScripts/notificacion.js"
                 }
             }
