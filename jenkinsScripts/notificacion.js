@@ -14628,7 +14628,7 @@
                     <li>Linter_stage: ${process.env.LINTER} </li>
                     <li>Test_stage: ${process.env.TEST} </li>
                     <li>Update_readme_stage: ${process.env.UPDATE} </li>
-                    
+                    <li>push_changes_stage: ${process.env.PUSH} </li>
                     <li>Deploy_to_Vercel_stage: ${process.env.DEPLOY} </li>
                 </ul>
             </div>

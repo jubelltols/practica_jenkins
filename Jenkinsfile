@@ -30,7 +30,7 @@ pipeline {
         stage('update_readme') {
             steps {
                 script {
-                    echo "${env.CYPRESS}"
+                    echo "${env.TEST}"
                     env.UPDATE = sh(script: "node jenkinsScripts/update_readme.js $TEST", returnStatus:true)
                     /* sh "node jenkinsScripts/update_readme.js $CYPRESS" */
                 }
@@ -70,6 +70,11 @@ pipeline {
                     withCredentials([
                         string(credentialsId: 'google-password', variable: 'PASSWORD_GOOGLE'),
                     ]){
+                        echo "${env.LINTER}"
+                        echo "${env.TEST}"
+                        echo "${env.UPDATE}"
+                        echo "${env.PUSH}"
+                        echo "${env.DEPLOY}"
                         env.CORREO = "${params.correo_notificación}"
                         sh "node jenkinsScripts/notificacion.js"
                     }
