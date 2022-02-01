@@ -70,7 +70,7 @@ Este stage esta formado por un step que:
         steps {
             script {
                 sh "npm install"
-                sh "npm run lint"
+                env.LINTER = sh(script: "npm run lint", returnStatus:true)
             }
         }
     }
@@ -90,7 +90,7 @@ Este stage esta formado por un step que:
                 sh "npm install"
                 sh "npm run build"
                 sh "npm run start &"
-                env.CYPRESS = sh(script: "npm run cypress", returnStatus:true)
+                env.TEST = sh(script: "npm run cypress", returnStatus:true)
             }
         }
     }
@@ -105,8 +105,8 @@ Este stage esta formado por un step que:
     stage('update_readme') {
         steps {
             script {
-                echo "${env.CYPRESS}"
-                sh "node jenkinsScripts/update_readme.js $CYPRESS"
+                echo "${env.TEST}"
+                env.UPDATE = sh(script: "node jenkinsScripts/update_readme.js $TEST", returnStatus:true)
             }
         }
     }
@@ -137,9 +137,7 @@ Este stage esta formado por un step que:
                 return console.log(err);
             }
 
-            var result = data.replace(/\<\!\-\-\-badge\-\-\-\>((.|[\n|\r|\r\n])*?)\<\!\-\-\-badge\-\-\-\>[\n|\r|\r\n]?(\s+)?/g,"<!---badge--->
- ![Generic badge](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg) 
-<!---badge--->");
+            var result = data.replace(/\<\!\-\-\-badge\-\-\-\>((.|[\n|\r|\r\n])*?)\<\!\-\-\-badge\-\-\-\>[\n|\r|\r\n]?(\s+)?/g,"<!---bagde---> + bagde + <!---bagde--->");
 
             fs.writeFile('./README.md', result, 'utf8', function (err) {
                 if (err) return console.log(err);
@@ -164,7 +162,7 @@ Este stage esta formado por un step que:
 - Git Add, Commit y psuh
 
 ```
-   stage('push_Changes') {
+    stage('push_Changes') {
         steps {
             script {                    
                 sh "git config user.name jubelltols"
@@ -174,7 +172,7 @@ Este stage esta formado por un step que:
                 withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                     sh 'git remote set-url origin https://"$USER":"$PASSWORD"@github.com/jubelltols/practica_jenkins'
                 }
-                sh "git push origin HEAD:master"
+                env.PUSH = sh(script: "git push origin HEAD:master", returnStatus:true)
             }
         }
     }
@@ -214,19 +212,19 @@ Para utilizar vercel deberemos crear las siguientes credentiales:
 ### 8.5.Añadir al jenkinsfile
 ```
     stage('deploy_to_Vercel') {
-        steps {
-            script {
-                withCredentials([
-                    string(credentialsId: 'vercel-org-id', variable: 'VERCELORGID'),
-                    string(credentialsId: 'vercel-project-id', variable: 'VERCELPROJECTID'),
-                    string(credentialsId: 'vercel-token', variable: 'VERCELTOKEN')
-                ]){
-                    sh 'VERCEL_ORG_ID="$VERCELORGID" VERCEL_PROJECT_ID="$VERCELPROJECTID" vercel --prod --scope jubelltols --token="$VERCELTOKEN"'
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'vercel-org-id', variable: 'VERCELORGID'),
+                        string(credentialsId: 'vercel-project-id', variable: 'VERCELPROJECTID'),
+                        string(credentialsId: 'vercel-token', variable: 'VERCELTOKEN')
+                    ]){
+                        env.DEPLOY = sh(script: 'VERCEL_ORG_ID="$VERCELORGID" VERCEL_PROJECT_ID="$VERCELPROJECTID" vercel --prod --scope jubelltols --token="$VERCELTOKEN"', returnStatus:true)
+                    }
+                    
                 }
-                
             }
         }
-    }
 ```
 ### 8.6.Link al despliege de la aplicación
 
@@ -248,10 +246,18 @@ Se encargará de enviar un correo con:
 ### 9.1.Crear notificacion.js
 
 ```
+    var LINTER = process.env.LINTER == 0 ? 'Success' : 'Failed'
+    var TEST = process.env.TEST == 0 ? 'Success' : 'Failed'
+    var UPDATE = process.env.UPDATE == 0 ? 'Success' : 'Failed'
+    var PUSH = process.env.PUSH == 0 ? 'Success' : 'Failed'
+    var DEPLOY = process.env.DEPLOY == 0 ? 'Success' : 'Failed'
+
     const nodemailer = __nccwpck_require__(832);
     
     var transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
             user: process.env.CORREO,
             pass: process.env.PASSWORD_GOOGLE
@@ -266,10 +272,11 @@ Se encargará de enviar un correo con:
             <div>   
                 <p>Se ha realizado un push en la rama main que ha provocado la ejecución de  la pipeline de practica_jenkins con los siguientes resultados: </p>
                 <ul>
-                    <li>Linter_stage: ${process.env.LINTER} </li>
-                    <li>Test_stage: ${process.env.TEST} </li>
-                    <li>Update_readme_stage: ${process.env.UPDATE} </li>
-                    <li>Deploy_to_Vercel_stage: ${process.env.DEPLOY} </li>
+                    <li>Linter_stage: ${LINTER} </li>
+                    <li>Test_stage: ${TEST} </li>
+                    <li>Update_readme_stage: ${UPDATE} </li>
+                    <li>Push_changes_stage: ${PUSH} </li>
+                    <li>Deploy_to_Vercel_stage: ${DEPLOY} </li>
                 </ul>
             </div>
         ` 
@@ -324,133 +331,90 @@ Para enviar el correo necesitaremos crear una credentia en la que se almacene la
 ## 10.Jenkinsfile 
 
 ```
-    pipeline {
-        agent any 
-        parameters {
-            string(name: 'ejecutor', defaultValue: 'jubelltols', description: 'Nombre de la persona que ejecuta la pipeline')
-            string(name: 'motivo', defaultValue: 'Prueba praactica jenkins', description: 'Motivo por el cual estamos ejecutando la pipeline')
-            string(name: 'correo_notificación', defaultValue: 'jubelltols@gmail.com', description: 'Correo al que notificaremos el resultado de cada stage ejecutado')
-        }
-        triggers {
-            pollSCM('0 */3 * * *')
-        }
-        stages {
-            stage('linter') {
-                steps {
-                    script {
-                        sh "npm install"
-                        sh "npm run lint"
-                    }
-                }
-                post {
-                    success {
-                        script {
-                            env.LINTER = "SUCCESS"
-                        }
-                    }
-                    failure {
-                        script {
-                            env.LINTER = "FAILURE"
-                        }
-                    }
-                }
-            }
-            stage('test') {
-                steps {
-                    script {
-                        sh "npm install"
-                        sh "npm run build"
-                        sh "npm run start &"
-                        env.CYPRESS = sh(script: "npm run cypress", returnStatus:true)
-                    }
-                }
-                post {
-                    success {
-                        script {
-                            env.TEST = "SUCCESS"
-                        }
-                    }
-                    failure {
-                        script {
-                            env.TEST = "FAILURE"
-                        }
-                    }
-                }
-            }
-            stage('update_readme') {
-                steps {
-                    script {
-                        echo "${env.CYPRESS}"
-                        sh "node jenkinsScripts/update_readme.js $CYPRESS"
-                    }
-                }
-                post {
-                    success {
-                        script {
-                            env.UPDATE = "SUCCESS"
-                        }
-                    }
-                    failure {
-                        script {
-                            env.UPDATE = "FAILURE"
-                        }
-                    }
-                }
-            }
-            stage('push_Changes') {
-                steps {
-                    script {                    
-                        sh "git config user.name jubelltols"
-                        sh "git config user.email jubelltols@gmail.com"
-                        sh "git add ."
-                        sh "git commit -m 'Pipeline ejecutada por ${params.ejecutor}. Motivo: ${params.motivo}'"
-                        withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-                            sh 'git remote set-url origin https://"$USER":"$PASSWORD"@github.com/jubelltols/practica_jenkins'
-                        }
-                        sh "git push origin HEAD:master"
-                    }
-                }
-            }
-            stage('deploy_to_Vercel') {
-                steps {
-                    script {
-                        withCredentials([
-                            string(credentialsId: 'vercel-org-id', variable: 'VERCELORGID'),
-                            string(credentialsId: 'vercel-project-id', variable: 'VERCELPROJECTID'),
-                            string(credentialsId: 'vercel-token', variable: 'VERCELTOKEN')
-                        ]){
-                            sh 'VERCEL_ORG_ID="$VERCELORGID" VERCEL_PROJECT_ID="$VERCELPROJECTID" vercel --prod --scope jubelltols --token="$VERCELTOKEN"'
-                        }
-                        
-                    }
-                }
-                post {
-                    success {
-                        script {
-                            env.DEPLOY = "SUCCESS"
-                        }
-                    }
-                    failure {
-                        script {
-                            env.DEPLOY = "FAILURE"
-                        }
-                    }
-                }
-            }
-            stage('notificacion') {
-                steps {
-                    script {
-                        withCredentials([
-                            string(credentialsId: 'google-password', variable: 'PASSWORD_GOOGLE'),
-                        ]){
-                            env.CORREO = "${params.correo_notificación}"
-                            sh "node jenkinsScripts/notificacion.js"
-                        }
-                    }
-                }
-            } 
-        }
+pipeline {
+    agent any 
+    parameters {
+        string(name: 'ejecutor', defaultValue: 'jubelltols', description: 'Nombre de la persona que ejecuta la pipeline')
+        string(name: 'motivo', defaultValue: 'Prueba praactica jenkins', description: 'Motivo por el cual estamos ejecutando la pipeline')
+        string(name: 'correo_notificación', defaultValue: 'jubelltols@gmail.com', description: 'Correo al que notificaremos el resultado de cada stage ejecutado')
     }
+    triggers {
+        pollSCM('0 */3 * * *')
+    }
+    stages {
+        stage('linter') {
+            steps {
+                script {
+                    sh "npm install"
+                    env.LINTER = sh(script: "npm run lint", returnStatus:true)
+                }
+            }
+        }
+        stage('test') {
+            steps {
+                script {
+                    sh "npm install"
+                    sh "npm run build"
+                    sh "npm run start &"
+                    env.TEST = sh(script: "npm run cypress", returnStatus:true)
+                }
+            }
+        }
+        stage('update_readme') {
+            steps {
+                script {
+                    echo "${env.TEST}"
+                    env.UPDATE = sh(script: "node jenkinsScripts/update_readme.js $TEST", returnStatus:true)
+                }
+            }
+        }
+        stage('push_Changes') {
+            steps {
+                script {                    
+                    sh "git config user.name jubelltols"
+                    sh "git config user.email jubelltols@gmail.com"
+                    sh "git add ."
+                    sh "git commit -m 'Pipeline ejecutada por ${params.ejecutor}. Motivo: ${params.motivo}'"
+                    withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                        sh 'git remote set-url origin https://"$USER":"$PASSWORD"@github.com/jubelltols/practica_jenkins'
+                    }
+                    env.PUSH = sh(script: "git push origin HEAD:master", returnStatus:true)
+                }
+            }
+        }
+        stage('deploy_to_Vercel') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'vercel-org-id', variable: 'VERCELORGID'),
+                        string(credentialsId: 'vercel-project-id', variable: 'VERCELPROJECTID'),
+                        string(credentialsId: 'vercel-token', variable: 'VERCELTOKEN')
+                    ]){
+                        env.DEPLOY = sh(script: 'ERCEL_ORG_ID="$VERCELORGID" VERCEL_PROJECT_ID="$VERCELPROJECTID" vercel --prod --scope jubelltols --token="$VERCELTOKEN"', returnStatus:true)
+                    }
+                    
+                }
+            }
+        }
+        stage('notificacion') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'google-password', variable: 'PASSWORD_GOOGLE'),
+                    ]){
+                        echo "${env.LINTER}"
+                        echo "${env.TEST}"
+                        echo "${env.UPDATE}"
+                        echo "${env.PUSH}"
+                        echo "${env.DEPLOY}"
+                        env.CORREO = "${params.correo_notificación}"
+                        sh "node jenkinsScripts/notificacion.js"
+                    }
+                }
+            }
+        } 
+    }
+}
 ```
 
 ## 11.Resultados construccion con parametros de la pipeline

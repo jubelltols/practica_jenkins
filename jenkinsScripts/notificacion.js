@@ -14636,14 +14636,12 @@
                     <li>Linter_stage: ${LINTER} </li>
                     <li>Test_stage: ${TEST} </li>
                     <li>Update_readme_stage: ${UPDATE} </li>
-                    <li>push_changes_stage: ${PUSH} </li>
+                    <li>Push_changes_stage: ${PUSH} </li>
                     <li>Deploy_to_Vercel_stage: ${DEPLOY} </li>
                 </ul>
             </div>
         ` 
     };
-
-    console.log(mailOptions);
     
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {

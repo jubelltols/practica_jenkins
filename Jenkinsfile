@@ -32,7 +32,6 @@ pipeline {
                 script {
                     echo "${env.TEST}"
                     env.UPDATE = sh(script: "node jenkinsScripts/update_readme.js $TEST", returnStatus:true)
-                    /* sh "node jenkinsScripts/update_readme.js $CYPRESS" */
                 }
             }
         }
@@ -46,7 +45,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                         sh 'git remote set-url origin https://"$USER":"$PASSWORD"@github.com/jubelltols/practica_jenkins'
                     }
-                     env.PUSH = sh(script: "git push origin HEAD:master", returnStatus:true)
+                    env.PUSH = sh(script: "git push origin HEAD:master", returnStatus:true)
                 }
             }
         }
@@ -58,7 +57,7 @@ pipeline {
                         string(credentialsId: 'vercel-project-id', variable: 'VERCELPROJECTID'),
                         string(credentialsId: 'vercel-token', variable: 'VERCELTOKEN')
                     ]){
-                        env.DEPLOY = sh(script: 'ERCEL_ORG_ID="$VERCELORGID" VERCEL_PROJECT_ID="$VERCELPROJECTID" vercel --prod --scope jubelltols --token="$VERCELTOKEN"', returnStatus:true)
+                        env.DEPLOY = sh(script: 'VERCEL_ORG_ID="$VERCELORGID" VERCEL_PROJECT_ID="$VERCELPROJECTID" vercel --prod --scope jubelltols --token="$VERCELTOKEN"', returnStatus:true)
                     }
                     
                 }
