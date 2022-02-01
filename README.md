@@ -24,10 +24,11 @@ Para configurar una pipeline nos dirigiremos al menu de la izquierda en jenkins 
 Seguidamente añadiremos el nombre y selecionaremos pipelane.
 
 ![jenkins](https://github.com/jubelltols/practica_jenkins/blob/master/img/img2.png)
+![jenkins](https://github.com/jubelltols/practica_jenkins/blob/master/img/img1.png)
 
 Ahora debemos ir a la seccion pipeline y añadir el repositorio de github y las credenciales necesaria
 
-![jenkins](https://github.com/jubelltols/practica_jenkins/blob/master/img/img1.png)
+![jenkins](https://github.com/jubelltols/practica_jenkins/blob/master/img/img3.png)
 
 Por ultimo especificaremos la rama y el nombre del jenkinsfile y guardar.
 
