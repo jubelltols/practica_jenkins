@@ -23,15 +23,15 @@ Jenkins usa la arquitectura maestro/esclavo:
 Para configurar una pipeline nos dirigiremos al menu de la izquierda en jenkins y haremos click en nueva tarea.
 Seguidamente añadiremos el nombre y selecionaremos pipelane.
 
-![token vercel](https://github.com/jubelltols/practica_jenkins/blob/master/img/img1.png)
+![jenkins](https://github.com/jubelltols/practica_jenkins/blob/master/img/img2.png)
 
 Ahora debemos ir a la seccion pipeline y añadir el repositorio de github y las credenciales necesaria
 
-![token vercel](https://github.com/jubelltols/practica_jenkins/blob/master/img/img2.png)
+![jenkins](https://github.com/jubelltols/practica_jenkins/blob/master/img/img1.png)
 
 Por ultimo especificaremos la rama y el nombre del jenkinsfile y guardar.
 
-![token vercel](https://github.com/jubelltols/practica_jenkins/blob/master/img/img3.png)
+![jenkins](https://github.com/jubelltols/practica_jenkins/blob/master/img/img3.png)
 
 ## 2.Parametros de la pipeline
 
@@ -136,9 +136,7 @@ Este stage esta formado por un step que:
                 return console.log(err);
             }
 
-            var result = data.replace(/\<\!\-\-\-badge\-\-\-\>((.|[\n|\r|\r\n])*?)\<\!\-\-\-badge\-\-\-\>[\n|\r|\r\n]?(\s+)?/g,"<!---badge--->
- ![Generic badge](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg) 
-<!---badge--->");
+            var result = data.replace(/\<\!\-\-\-badge\-\-\-\>((.|[\n|\r|\r\n])*?)\<\!\-\-\-badge\-\-\-\>[\n|\r|\r\n]?(\s+)?/g,"<!---badge---> + bagde + <!---badge--->");
 
             fs.writeFile('./README.md', result, 'utf8', function (err) {
                 if (err) return console.log(err);
@@ -184,7 +182,7 @@ plataforma vercel [link](https://vercel.com/).
 
 ### 5.1.Crear cuenta vercel y obtener token de vercel
 
-![token vercel](https://github.com/jubelltols/practica_jenkins/blob/master/img/img%20(2).png)
+![token vercel](https://github.com/jubelltols/practica_jenkins/blob/master/img/img11.png)
 
 ### 5.2.Instalar Vercel localmente
 ```
@@ -197,15 +195,15 @@ npx vercel link o vercel
 ### 5.4.Añadir credential a Jenkins
 Para añadir una credential a jenkins nos dirigiremos a la configuracion de la pipeline.
 
-![github secrets](https://github.com/jubelltols/practica_jenkins/blob/master/img/img%20(3).png)
+![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img12.png)
 
 Seguidamente nos dirigiremos a la sección pipeline > credentials > add > Jenkins
 
-![github secrets](https://github.com/jubelltols/practica_jenkins/blob/master/img/img%20(3).png)
+![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img6.png)
 
 Por ultimo seleccionaremos el tipo, añadiremos el secret y id
 
-![github secrets](https://github.com/jubelltols/practica_jenkins/blob/master/img/img%20(3).png)
+![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img7.png)
 
 Para utilizar vercel deberemos crear las siguientes credentiales:
  - id de la organizzacion
@@ -285,21 +283,21 @@ Se encargará de enviar un correo con:
 ```
 ### 6.3.Crear una contraseña de aplicaion en gmail para poder permitir a nodemailer enviar el correo.
 
-![contraseña de aplicaion en gmail](https://github.com/jubelltols/practica_jenkins/blob/master/img/img%20(4).png)
-![contraseña de aplicaion en gmail](https://github.com/jubelltols/practica_jenkins/blob/master/img/img%20(5).png)
+![contraseña de aplicaion en gmail](https://github.com/jubelltols/practica_jenkins/blob/master/img/img4.png)
+![contraseña de aplicaion en gmail](https://github.com/jubelltols/practica_jenkins/blob/master/img/img9.png)
 
 ### 6.3.Añadir credential a Jenkins
 Para añadir una credential a jenkins nos dirigiremos a la configuracion de la pipeline.
 
-![github secrets](https://github.com/jubelltols/practica_jenkins/blob/master/img/img%20(3).png)
+![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img12.png)
 
 Seguidamente nos dirigiremos a la sección pipeline > credentials > add > Jenkins
 
-![github secrets](https://github.com/jubelltols/practica_jenkins/blob/master/img/img%20(3).png)
+![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img6.png)
 
 Por ultimo seleccionaremos el tipo, añadiremos el secret y id
 
-![github secrets](https://github.com/jubelltols/practica_jenkins/blob/master/img/img%20(3).png)
+![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img7.png)
 
 Para enviar el correo necesitaremos crear una credentia en la que se almacene la contraseña del corroe.
 
@@ -319,7 +317,7 @@ Para enviar el correo necesitaremos crear una credentia en la que se almacene la
     } 
 ```
 ### 6.6.Correo electronico de los resultados de las actions
-![correo rusltados](https://github.com/jubelltols/practica_jenkins/blob/master/img/img%20(1).png)
+![correo rusltados](https://github.com/jubelltols/practica_jenkins/blob/master/img/img8.png)
 
 ## 7.Jenkinsfile 
 
@@ -452,6 +450,10 @@ Para enviar el correo necesitaremos crear una credentia en la que se almacene la
         }
     }
 ```
+
+# Resultados construccion con parametros de la pipeline
+
+![jenkins result](https://github.com/jubelltols/practica_jenkins/blob/master/img/img10.png)
 
 # RESULTADO DE LOS ÚLTIMOS TESTS
 
