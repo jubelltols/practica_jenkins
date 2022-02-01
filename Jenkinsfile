@@ -93,12 +93,12 @@ pipeline {
                         string(credentialsId: 'vercel-project-id', variable: 'VERCELPROJECTID'),
                         string(credentialsId: 'vercel-token', variable: 'VERCELTOKEN')
                     ]){
-                        sh 'ERCEL_ORG_ID="$VERCELORGID" VERCEL_PROJECT_ID="$VERCELPROJECTID" vercel --prod --scope jubelltols --token="$VERCELTOKEN"'
+                        sh 'VERCEL_ORG_ID="$VERCELORGID" VERCEL_PROJECT_ID="$VERCELPROJECTID" vercel --prod --scope jubelltols --token="$VERCELTOKEN"'
                     }
                     
                 }
             }
-            /* post {
+            post {
                 success {
                     script {
                         env.DEPLOY = "SUCCESS"
@@ -109,7 +109,7 @@ pipeline {
                         env.DEPLOY = "FAILURE"
                     }
                 }
-            } */
+            }
         }
         stage('notificacion') {
             steps {
@@ -120,11 +120,6 @@ pipeline {
                         env.CORREO = "${params.correo_notificación}"
                         sh "node jenkinsScripts/notificacion.js"
                     }
-                }
-            }
-            post { 
-                always { 
-                    echo 'I will always say Hello again!'
                 }
             }
         } 
