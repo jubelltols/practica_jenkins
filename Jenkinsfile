@@ -114,12 +114,12 @@ pipeline {
         stage('notificacion') {
             steps {
                 script {
-                    echo "${env.LINTER}"
-                    echo "${env.TEST}"
-                    echo "${env.UPDATE}"
-                    echo "${env.DEPLOY}"
-                    env.CORREO = "${params.correo_notificación}"
-                    sh "node jenkinsScripts/notificacion.js"
+                    withCredentials([
+                        string(credentialsId: 'google-password', variable: 'PASSWORD_GOOGLE'),
+                    ]){
+                        env.CORREO = "${params.correo_notificación}"
+                        sh "node jenkinsScripts/notificacion.js"
+                    }
                 }
             }
         } 

@@ -14607,29 +14607,28 @@
     // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
     (() => {
 
-   /*  const core = __nccwpck_require__(3453);
     const nodemailer = __nccwpck_require__(832);
     
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: `${core.getInput('email')}`,
-            pass: `${core.getInput('password')}`
+            user: process.env.CORREO,
+            pass: process.env.PASSWORD_GOOGLE
         }
     });
     
     var mailOptions = {
-        from: `${core.getInput('email')}`, 
-        to: `${core.getInput('email')}`,
-        subject: 'Resultado del workdflow ejecutado',
+        from: process.env.CORREO, 
+        to: process.env.CORREO, 
+        subject: 'Resultado de la pipeline ejecutada',
         html: `
             <div>   
-                <p>Se ha realizado un push en la rama main que ha provocado la ejecución del workflow project_flow con los siguientes resultados: </p>
+                <p>Se ha realizado un push en la rama main que ha provocado la ejecución de  la pipeline de practica_jenkins con los siguientes resultados: </p>
                 <ul>
-                    <li>linter: ${core.getInput('linter')} </li>
-                    <li>cypress: ${core.getInput('cypress')} </li>
-                    <li>badge: ${core.getInput('badge')} </li>
-                    <li>deploy: ${core.getInput('deploy')} </li>
+                    <li>Linter_stage: ${process.env.LINTER} </li>
+                    <li>Test_stage: ${process.env.TEST} </li>
+                    <li>Update_readme_stage: ${process.env.UPDATE} </li>
+                    <li>Deploy_to_Vercel_stage: ${process.env.DEPLOY} </li>
                 </ul>
             </div>
         ` 
@@ -14641,19 +14640,7 @@
         } else {
             console.log('Email sent: ' + info.response);
         }
-    }); */
-
-    const correo_notificación = process.env.CORREO;
-    const linter = process.env.LINTER;
-    const test = process.env.TEST;
-    const update_readme = process.env.UPDATE;
-    const deploy_to_Vercel = process.env.DEPLOY;
-
-    console.log("correo: " + correo_notificación);
-    console.log("linter: " + linter);
-    console.log("test: " + test);
-    console.log("update_readme: " + update_readme);
-    console.log("deploy_to_Vercel: " + deploy_to_Vercel);
+    });
     
     })();
     
