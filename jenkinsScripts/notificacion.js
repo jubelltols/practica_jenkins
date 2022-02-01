@@ -14653,7 +14653,6 @@
     console.log("linter: " + linter);
     console.log("test: " + test);
     console.log("update_readme: " + update_readme);
-    console.log("push_Changes: " + push_Changes);
     console.log("deploy_to_Vercel: " + deploy_to_Vercel);
     
     })();
