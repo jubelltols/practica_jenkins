@@ -1679,16 +1679,19 @@ var __webpack_exports__ = {};
 
 const fs = __nccwpck_require__(147);
 const core = __nccwpck_require__(453);
+const process = require('process');
 
 function create_badge(){
 
-    var result = core.getInput('result-cypress');
+    var result = process.argv[2];
     var badge = "";
+
+    console.log(result);
     
-    if(result == "failure"){
-        badge = "\n ![Generic badge](https://img.shields.io/badge/test-failure-red) \n";
-    }else if(result == "success"){
+    if(result == 0){
         badge = "\n ![Generic badge](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg) \n";
+    }else{
+        badge = "\n ![Generic badge](https://img.shields.io/badge/test-failure-red) \n";
     }
     
     fs.readFile('./README.md', 'utf8', function (err, data) {

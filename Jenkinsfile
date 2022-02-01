@@ -55,7 +55,7 @@ pipeline {
             steps {
                 script {
                     echo "${env.CYPRESS}"
-                    /* sh "node jenkinsScripts/update_readme.js" */
+                    sh "node jenkinsScripts/update_readme.js $CYPRESS"
                 }
             }
             post {
