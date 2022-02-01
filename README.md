@@ -136,7 +136,9 @@ Este stage esta formado por un step que:
                 return console.log(err);
             }
 
-            var result = data.replace(/\<\!\-\-\-badge\-\-\-\>((.|[\n|\r|\r\n])*?)\<\!\-\-\-badge\-\-\-\>[\n|\r|\r\n]?(\s+)?/g,"<!---badge--->" +  badge + "<!---badge--->");
+            var result = data.replace(/\<\!\-\-\-badge\-\-\-\>((.|[\n|\r|\r\n])*?)\<\!\-\-\-badge\-\-\-\>[\n|\r|\r\n]?(\s+)?/g,"<!---badge--->
+ ![Generic badge](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg) 
+<!---badge--->");
 
             fs.writeFile('./README.md', result, 'utf8', function (err) {
                 if (err) return console.log(err);
