@@ -98,7 +98,7 @@ pipeline {
                     
                 }
             }
-            post {
+            /* post {
                 success {
                     script {
                         env.DEPLOY = "SUCCESS"
@@ -109,7 +109,7 @@ pipeline {
                         env.DEPLOY = "FAILURE"
                     }
                 }
-            }
+            } */
         }
         stage('notificacion') {
             steps {
