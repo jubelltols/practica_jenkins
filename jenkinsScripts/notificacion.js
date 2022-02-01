@@ -14610,7 +14610,9 @@
     const nodemailer = __nccwpck_require__(832);
     
     var transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
             user: process.env.CORREO,
             pass: process.env.PASSWORD_GOOGLE
