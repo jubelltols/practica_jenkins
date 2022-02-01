@@ -77,7 +77,7 @@ pipeline {
                         sh "git config user.name jubelltols"
                         sh "git config user.email jubelltols@gmail.com"
                         sh "git add ."
-                        sh "git commit -m 'Update README.md'"
+                        sh "git commit -m 'Pipeline ejecutada por ${params.ejecutor}. Motivo: ${params.motivo}'"
                         withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                             sh 'git remote set-url origin https://"$USER":"$PASSWORD"@github.com/jubelltols/practica_jenkins'
                         }
