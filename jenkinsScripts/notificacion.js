@@ -14607,6 +14607,12 @@
     // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
     (() => {
 
+    var LINTER = process.env.LINTER = 0 ? 'Success' : 'Failed'
+    var TEST = process.env.TEST = 0 ? 'Success' : 'Failed'
+    var UPDATE = process.env.UPDATE = 0 ? 'Success' : 'Failed'
+    var PUSH = process.env.PUSH = 0 ? 'Success' : 'Failed'
+    var DEPLOY = process.env.DEPLOY = 0 ? 'Success' : 'Failed'
+
     const nodemailer = __nccwpck_require__(832);
     
     var transporter = nodemailer.createTransport({
@@ -14627,15 +14633,17 @@
             <div>   
                 <p>Se ha realizado un push en la rama main que ha provocado la ejecución de  la pipeline de practica_jenkins con los siguientes resultados: </p>
                 <ul>
-                    <li>Linter_stage: ${process.env.LINTER} </li>
-                    <li>Test_stage: ${process.env.TEST} </li>
-                    <li>Update_readme_stage: ${process.env.UPDATE} </li>
-                    <li>push_changes_stage: ${process.env.PUSH} </li>
-                    <li>Deploy_to_Vercel_stage: ${process.env.DEPLOY} </li>
+                    <li>Linter_stage: ${LINTER} </li>
+                    <li>Test_stage: ${TEST} </li>
+                    <li>Update_readme_stage: ${UPDATE} </li>
+                    <li>push_changes_stage: ${PUSH} </li>
+                    <li>Deploy_to_Vercel_stage: ${DEPLOY} </li>
                 </ul>
             </div>
         ` 
     };
+
+    console.log(mailOptions);
     
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
