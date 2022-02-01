@@ -31,7 +31,7 @@ Ahora debemos ir a la seccion pipeline y añadir el repositorio de github y las 
 
 Por ultimo especificaremos la rama y el nombre del jenkinsfile y guardar.
 
-![jenkins](https://github.com/jubelltols/practica_jenkins/blob/master/img/img3.png)
+![jenkins](https://github.com/jubelltols/practica_jenkins/blob/master/img/img6.png)
 
 ## 2.Parametros de la pipeline
 
@@ -177,8 +177,7 @@ Este stage esta formado por un step que:
     }
 ```
 ## 5.Deploy to Vercel stage
-Ejecutará un script (que también estará dentro de la carpeta jenkinsScripts) encargado de publicar el proyecto en la
-plataforma vercel [link](https://vercel.com/).
+Ejecutará un script encargado de publicar el proyecto en la plataforma vercel [link](https://vercel.com/).
 
 ### 5.1.Crear cuenta vercel y obtener token de vercel
 
@@ -199,16 +198,16 @@ Para añadir una credential a jenkins nos dirigiremos a la configuracion de la p
 
 Seguidamente nos dirigiremos a la sección pipeline > credentials > add > Jenkins
 
-![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img6.png)
+![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img3.png)
 
 Por ultimo seleccionaremos el tipo, añadiremos el secret y id
 
 ![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img7.png)
 
 Para utilizar vercel deberemos crear las siguientes credentiales:
- - id de la organizzacion
- - id del projecto de vercel 
- - nuestro token de vercel.
+ - Id de la organizzacion
+ - Id del projecto de vercel 
+ - Token de vercel
 ### 5.5.Añadir al jenkinsfile
 ```
     stage('deploy_to_Vercel') {
@@ -228,7 +227,7 @@ Para utilizar vercel deberemos crear las siguientes credentiales:
 ```
 ### 5.5.Link al despliege de la aplicación
 
-[link](https://nextjs-blog-practica.vercel.app/)
+[https://practica-jenkins.vercel.app/](https://practica-jenkins.vercel.app/)
 
 ## 6.Notification stage
 Se encargará de enviar un correo con:
@@ -293,7 +292,7 @@ Para añadir una credential a jenkins nos dirigiremos a la configuracion de la p
 
 Seguidamente nos dirigiremos a la sección pipeline > credentials > add > Jenkins
 
-![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img6.png)
+![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img3.png)
 
 Por ultimo seleccionaremos el tipo, añadiremos el secret y id
 
@@ -451,7 +450,7 @@ Para enviar el correo necesitaremos crear una credentia en la que se almacene la
     }
 ```
 
-# Resultados construccion con parametros de la pipeline
+## 8.Resultados construccion con parametros de la pipeline
 
 ![jenkins result](https://github.com/jubelltols/practica_jenkins/blob/master/img/img10.png)
 
