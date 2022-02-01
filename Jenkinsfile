@@ -37,7 +37,7 @@ pipeline {
                     sh "npm run start &"
                     sh "npm run cypress"
                     env.CYPRESS = sh "echo \$?"
-                    echo "${env.CYPRESS}"
+                   
                 }
             }
             post {
@@ -53,10 +53,11 @@ pipeline {
                 }
             }
         }
-        /* stage('update_readme') {
+        stage('update_readme') {
             steps {
                 script {
-                    sh "node jenkinsScripts/update_readme.js"
+                    echo "${env.CYPRESS}"
+                    /* sh "node jenkinsScripts/update_readme.js" */
                 }
             }
             post {
@@ -71,7 +72,7 @@ pipeline {
                     }
                 }
             }
-        } */
+        }
         stage('push_Changes') {
             steps {
                 script {                    
@@ -79,10 +80,7 @@ pipeline {
                         sh "git config user.email jubelltols@gmail.com"
                         sh "git add ."
                         sh "git commit -m 'Update README.md'"
-                        withCredentials([usernamePassword(credentialsId: 'github-token', 
-                                                usernameVariable: 'USER', 
-                                                passwordVariable: 'PASSWORD')]) {
-                        /* withCredentials([usernameColonPassword(credentialsId: 'github-token', variable: 'USERPASS')]) {      */
+                        withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                             sh 'git remote set-url origin https://"$USER":"$PASSWORD"@github.com/jubelltols/practica_jenkins'
                         }
                         sh "git push origin HEAD:master"
