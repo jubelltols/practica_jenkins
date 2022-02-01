@@ -14607,11 +14607,11 @@
     // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
     (() => {
 
-    var LINTER = process.env.LINTER = 0 ? 'Success' : 'Failed'
-    var TEST = process.env.TEST = 0 ? 'Success' : 'Failed'
-    var UPDATE = process.env.UPDATE = 0 ? 'Success' : 'Failed'
-    var PUSH = process.env.PUSH = 0 ? 'Success' : 'Failed'
-    var DEPLOY = process.env.DEPLOY = 0 ? 'Success' : 'Failed'
+    var LINTER = process.env.LINTER == 0 ? 'Success' : 'Failed'
+    var TEST = process.env.TEST == 0 ? 'Success' : 'Failed'
+    var UPDATE = process.env.UPDATE == 0 ? 'Success' : 'Failed'
+    var PUSH = process.env.PUSH == 0 ? 'Success' : 'Failed'
+    var DEPLOY = process.env.DEPLOY == 0 ? 'Success' : 'Failed'
 
     const nodemailer = __nccwpck_require__(832);
     
