@@ -95,7 +95,7 @@ Este stage esta formado por un step que:
     }
 ```
 
-## 5.Update_Readme stage
+## 6.Update_Readme stage
 Se encargará de publicar en el readme del proyecto el badge que indicará si se han superado los tests de cypress o no.
 Este stage esta formado por un step que:
 - Ejecutara un script que sera el encargado de actualizar el badge.
@@ -111,7 +111,7 @@ Este stage esta formado por un step que:
     }
 ```
 
-### 5.1.Crear update_readme.js
+### 6.1.Crear update_readme.js
 
 ```
     const fs = __nccwpck_require__(147);
@@ -148,7 +148,7 @@ Este stage esta formado por un step que:
     create_badge();
 ```
 
-### 4.3.Push_Changes stage
+### 7.Push_Changes stage
 Se encargará de ejecutar el add, commit y push de los cambios del readme a nuestro repositorio de código. El comentario del commit
 deberá seguir el siguiente formato:
 
@@ -176,22 +176,22 @@ Este stage esta formado por un step que:
         }
     }
 ```
-## 5.Deploy to Vercel stage
+## 8.Deploy to Vercel stage
 Ejecutará un script encargado de publicar el proyecto en la plataforma vercel [link](https://vercel.com/).
 
-### 5.1.Crear cuenta vercel y obtener token de vercel
+### 8.1.Crear cuenta vercel y obtener token de vercel
 
 ![token vercel](https://github.com/jubelltols/practica_jenkins/blob/master/img/img11.png)
 
-### 5.2.Instalar Vercel localmente
+### 8.2.Instalar Vercel localmente
 ```
 npm i vercel
 ```
-### 5.3.Linkear el proyecto a vercel
+### 8.3.Linkear el proyecto a vercel
 ```
 npx vercel link o vercel
 ```
-### 5.4.Añadir credential a Jenkins
+### 8.4.Añadir credential a Jenkins
 Para añadir una credential a jenkins nos dirigiremos a la configuracion de la pipeline.
 
 ![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img12.png)
@@ -208,7 +208,7 @@ Para utilizar vercel deberemos crear las siguientes credentiales:
  - Id de la organizzacion
  - Id del projecto de vercel 
  - Token de vercel
-### 5.5.Añadir al jenkinsfile
+### 8.5.Añadir al jenkinsfile
 ```
     stage('deploy_to_Vercel') {
         steps {
@@ -225,11 +225,11 @@ Para utilizar vercel deberemos crear las siguientes credentiales:
         }
     }
 ```
-### 5.5.Link al despliege de la aplicación
+### 8.6.Link al despliege de la aplicación
 
 [https://practica-jenkins.vercel.app/](https://practica-jenkins.vercel.app/)
 
-## 6.Notification stage
+## 9.Notification stage
 Se encargará de enviar un correo con:
 
 * Destinatario: dirección de correo establecida como parámetro
@@ -242,7 +242,7 @@ Se encargará de enviar un correo con:
     - Update_readme_stage: resultado asociado
     - Deploy_to_Vercel_stage: resultado asociado
 
-### 6.2.Crear notificacion.js
+### 9.1.Crear notificacion.js
 
 ```
     const nodemailer = __nccwpck_require__(832);
@@ -280,12 +280,12 @@ Se encargará de enviar un correo con:
         }
     });
 ```
-### 6.3.Crear una contraseña de aplicaion en gmail para poder permitir a nodemailer enviar el correo.
+### 9.2.Crear una contraseña de aplicaion en gmail para poder permitir a nodemailer enviar el correo.
 
 ![contraseña de aplicaion en gmail](https://github.com/jubelltols/practica_jenkins/blob/master/img/img4.png)
 ![contraseña de aplicaion en gmail](https://github.com/jubelltols/practica_jenkins/blob/master/img/img9.png)
 
-### 6.3.Añadir credential a Jenkins
+### 9.3.Añadir credential a Jenkins
 Para añadir una credential a jenkins nos dirigiremos a la configuracion de la pipeline.
 
 ![jenkins credential](https://github.com/jubelltols/practica_jenkins/blob/master/img/img12.png)
@@ -300,7 +300,7 @@ Por ultimo seleccionaremos el tipo, añadiremos el secret y id
 
 Para enviar el correo necesitaremos crear una credentia en la que se almacene la contraseña del corroe.
 
-### 6.5.Añadir al jenkinsfile
+### 9.4.Añadir al jenkinsfile
 ```
     stage('notificacion') {
         steps {
@@ -315,10 +315,10 @@ Para enviar el correo necesitaremos crear una credentia en la que se almacene la
         }
     } 
 ```
-### 6.6.Correo electronico de los resultados de las actions
+### 9.5.Correo electronico de los resultados de las actions
 ![correo rusltados](https://github.com/jubelltols/practica_jenkins/blob/master/img/img8.png)
 
-## 7.Jenkinsfile 
+## 10.Jenkinsfile 
 
 ```
     pipeline {
@@ -450,9 +450,44 @@ Para enviar el correo necesitaremos crear una credentia en la que se almacene la
     }
 ```
 
-## 8.Resultados construccion con parametros de la pipeline
+## 11.Resultados construccion con parametros de la pipeline
 
 ![jenkins result](https://github.com/jubelltols/practica_jenkins/blob/master/img/img10.png)
+
+## 12.Plugin de dashboard view 
+Instalar el plugin de dashboard view  y configura un dashboard en jenkins para visualizar de forma customizada el resultado de los jobs ejecutados.
+
+- Nos dirigiremos al menu da la parte izquierda en jenkins y click en administar jenkins
+
+![dashboard view](https://github.com/jubelltols/practica_jenkins/blob/master/img/img20.png)
+
+- Haremos click en Administrar Plugins
+
+![dashboard view](https://github.com/jubelltols/practica_jenkins/blob/master/img/img21.png)
+
+- Buscaremos en todos los plugins "dashboard view", seleccionamos el plugin y Install without restart
+
+![dashboard view](https://github.com/jubelltols/practica_jenkins/blob/master/img/img22.png)
+
+- Ahora iremos a mis vistas y click en + 
+
+![dashboard view](https://github.com/jubelltols/practica_jenkins/blob/master/img/img23.png)
+
+- Añadimos el nombre de la nueva vista y su tipo
+
+![dashboard view](https://github.com/jubelltols/practica_jenkins/blob/master/img/img24.png)
+
+- Añadimos los proyectos que veremos en la dashboard
+
+![dashboard view](https://github.com/jubelltols/practica_jenkins/blob/master/img/img25.png)
+
+- Añadimos los portlets del tablero
+
+![dashboard view](https://github.com/jubelltols/practica_jenkins/blob/master/img/img26.png)
+
+- Vista de la Dashboard
+
+![dashboard view](https://github.com/jubelltols/practica_jenkins/blob/master/img/img27.png)
 
 # RESULTADO DE LOS ÚLTIMOS TESTS
 
