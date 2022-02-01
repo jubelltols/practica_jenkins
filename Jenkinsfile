@@ -36,7 +36,8 @@ pipeline {
                     sh "npm run build"
                     sh "npm run start &"
                     sh "npm run cypress"
-                    sh "echo \$?"
+                    env.CYPRESS = sh "echo \$?"
+                    echo "${env.CYPRESS}"
                 }
             }
             post {
@@ -52,7 +53,7 @@ pipeline {
                 }
             }
         }
-       /*  stage('update_readme') {
+        /* stage('update_readme') {
             steps {
                 script {
                     sh "node jenkinsScripts/update_readme.js"
