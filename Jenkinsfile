@@ -16,18 +16,6 @@ pipeline {
                     sh "npm run lint"
                 }
             }
-            post {
-                success {
-                    script {
-                        env.LINTER = "SUCCESS"
-                    }
-                }
-                failure {
-                    script {
-                        env.LINTER = "FAILURE"
-                    }
-                }
-            }
         }
         stage('test') {
             steps {
@@ -38,36 +26,13 @@ pipeline {
                     env.CYPRESS = sh(script: "npm run cypress", returnStatus:true)
                 }
             }
-            post {
-                success {
-                    script {
-                        env.TEST = "SUCCESS"
-                    }
-                }
-                failure {
-                    script {
-                        env.TEST = "FAILURE"
-                    }
-                }
-            }
         }
         stage('update_readme') {
             steps {
                 script {
                     echo "${env.CYPRESS}"
-                    sh "node jenkinsScripts/update_readme.js $CYPRESS"
-                }
-            }
-            post {
-                success {
-                    script {
-                        env.UPDATE = "SUCCESS"
-                    }
-                }
-                failure {
-                    script {
-                        env.UPDATE = "FAILURE"
-                    }
+                    env.UPDATE = sh(script: "node jenkinsScripts/update_readme.js $CYPRESS", returnStatus:true)
+                    /* sh "node jenkinsScripts/update_readme.js $CYPRESS" */
                 }
             }
         }
@@ -93,21 +58,9 @@ pipeline {
                         string(credentialsId: 'vercel-project-id', variable: 'VERCELPROJECTID'),
                         string(credentialsId: 'vercel-token', variable: 'VERCELTOKEN')
                     ]){
-                        sh 'VERCEL_ORG_ID="$VERCELORGID" VERCEL_PROJECT_ID="$VERCELPROJECTID" vercel --prod --scope jubelltols --token="$VERCELTOKEN"'
+                        env.DEPLOY = sh(script: 'VERCEL_ORG_ID="$VERCELORGID" VERCEL_PROJECT_ID="$VERCELPROJECTID" vercel --prod --scope jubelltols --token="$VERCELTOKEN"', returnStatus:true)
                     }
                     
-                }
-            }
-            post {
-                success {
-                    script {
-                        env.DEPLOY = "SUCCESS"
-                    }
-                }
-                failure {
-                    script {
-                        env.DEPLOY = "FAILURE"
-                    }
                 }
             }
         }
