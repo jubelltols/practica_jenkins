@@ -35,9 +35,7 @@ pipeline {
                     sh "npm install"
                     sh "npm run build"
                     sh "npm run start &"
-                    sh "npm run cypress"
-                    env.CYPRESS = sh "echo \$?"
-                   
+                    env.CYPRESS = sh(script: "npm run cypress", returnStatus:true)
                 }
             }
             post {
