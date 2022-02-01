@@ -1,9 +1,9 @@
 pipeline {
     agent any 
     parameters {
-        string(name: 'ejecutor', defaultValue: 'defaultValue', description: 'Nombre de la persona que ejecuta la pipeline')
-        string(name: 'motivo', defaultValue: 'defaultValue', description: 'Motivo por el cual estamos ejecutando la pipeline')
-        string(name: 'correo_notificación', defaultValue: 'defaultValue', description: 'Correo al que notificaremos el resultado de cada stage ejecutado')
+        string(name: 'ejecutor', defaultValue: 'jubelltols', description: 'Nombre de la persona que ejecuta la pipeline')
+        string(name: 'motivo', defaultValue: 'Prueba praactica jenkins', description: 'Motivo por el cual estamos ejecutando la pipeline')
+        string(name: 'correo_notificación', defaultValue: 'jubelltols@gmail.com', description: 'Correo al que notificaremos el resultado de cada stage ejecutado')
     }
     triggers {
         pollSCM('0 */3 * * *')
@@ -74,26 +74,14 @@ pipeline {
         stage('push_Changes') {
             steps {
                 script {                    
-                        sh "git config user.name jubelltols"
-                        sh "git config user.email jubelltols@gmail.com"
-                        sh "git add ."
-                        sh "git commit -m 'Pipeline ejecutada por ${params.ejecutor}. Motivo: ${params.motivo}'"
-                        withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-                            sh 'git remote set-url origin https://"$USER":"$PASSWORD"@github.com/jubelltols/practica_jenkins'
-                        }
-                        sh "git push origin HEAD:master"
+                    sh "git config user.name jubelltols"
+                    sh "git config user.email jubelltols@gmail.com"
+                    sh "git add ."
+                    sh "git commit -m 'Pipeline ejecutada por ${params.ejecutor}. Motivo: ${params.motivo}'"
+                    withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                        sh 'git remote set-url origin https://"$USER":"$PASSWORD"@github.com/jubelltols/practica_jenkins'
                     }
-                }
-            post {
-                success {
-                    script {
-                        env.PUSH = "SUCCESS"
-                    }
-                }
-                failure {
-                    script {
-                        env.PUSH = "FAILURE"
-                    }
+                    sh "git push origin HEAD:master"
                 }
             }
         }
@@ -128,8 +116,9 @@ pipeline {
                 script {
                     echo "${env.LINTER}"
                     echo "${env.TEST}"
+                    echo "${env.UPDATE}"
                     echo "${env.DEPLOY}"
-                    /* sh "node jenkinsScripts/notificacion.js" */
+                    sh "node jenkinsScripts/notificacion.js"
                 }
             }
         } 
