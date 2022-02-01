@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     sh "npm install"
-                    sh "npm run lint"
+                    env.LINTER = sh(script: "npm run lint", returnStatus:true)
                 }
             }
         }
@@ -23,7 +23,7 @@ pipeline {
                     sh "npm install"
                     sh "npm run build"
                     sh "npm run start &"
-                    env.CYPRESS = sh(script: "npm run cypress", returnStatus:true)
+                    env.TEST = sh(script: "npm run cypress", returnStatus:true)
                 }
             }
         }
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     echo "${env.CYPRESS}"
-                    env.UPDATE = sh(script: "node jenkinsScripts/update_readme.js $CYPRESS", returnStatus:true)
+                    env.UPDATE = sh(script: "node jenkinsScripts/update_readme.js $TEST", returnStatus:true)
                     /* sh "node jenkinsScripts/update_readme.js $CYPRESS" */
                 }
             }
